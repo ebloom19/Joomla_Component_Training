@@ -30,7 +30,7 @@
                 COMTODOLIST_TITLE_ITEMS
             </menu>
 
-            <menu link="option=com_catergories&amp;extension=com_todolist" view="catagories" alt="Todo LIst/Categories">
+            <menu link="option=com_catergories&amp;extension=com_todolist" view="catagories" alt="Todo List/Categories">
                 COM_TODOLIST_ITEMS_CATID
             </menu>
         </submenu>
