@@ -11,4 +11,4 @@ CREATE TABLE `#__TODOLIST_ITEMS` (
     `modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
     `modified_by` int(11) NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`)
-) DEFAUTL CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
