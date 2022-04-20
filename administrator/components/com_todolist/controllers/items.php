@@ -16,7 +16,7 @@ class TodolistControllerItems extends JControllerAdmin {
 
             ArrayHelper::toInteger($pks);
             $model = $this->getModel();
-            $model = duplicate($pks);
+            $model->duplicate($pks);
             $this->setMessage(JText::_('COM_TODOLIST_ITEMS_SUCCESS_DUPLICATED'));
         } catch(Exception $e) {
             JFactory::getApplication()->enqueueMessage($e->getMessage(), 'warning');
