@@ -15,9 +15,9 @@ class TodolistViewItems extends JViewLegacy {
         $this->items = $this->get('Items');
         $this->pagination = $this->get('Pagination');
 
-        if(count($errors = $this->get('Errors'))) {
-            throw new Exception(implode("\n", $errors));
-        }
+        // if(count($errors = $this->get('Errors'))) {
+        //     throw new Exception(implode("\n", $errors));
+        // }
 
         TodolistHelpersTodolist::addSubmenu('items');
 
@@ -65,17 +65,17 @@ class TodolistViewItems extends JViewLegacy {
 
             'filter published',
 
-            JHtml::_('select.options', JHtlm::_('jgrid.publishedOptions'), "value", "text", $this->state->get('filter.state'), true)
+            JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), "value", "text", $this->state->get('filter.state'), true)
         );
 
         $select_label = JText::_('COM_TODOLIST_STATUS_FILTER');
         $options = array();
         $options[0] = new stdClass();
         $options[0]->value = "0";
-        $options[0]->text = COM_TODOLIST_STATUS_INCOMPLETE;
+        $options[0]->text = 'COM_TODOLIST_STATUS_INCOMPLETE';
         $options[1] = new stdClass();
         $options[1]->value = "1";
-        $options[1]->text = COM_TODOLIST_STATUS_COMPLETE;
+        $options[1]->text = 'COM_TODOLIST_STATUS_COMPLETE';
         JHtmlSidebar::addFilter(
             $select_label,
             'filter_status',

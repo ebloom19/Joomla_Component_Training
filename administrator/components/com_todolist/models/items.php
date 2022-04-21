@@ -53,7 +53,7 @@ class TodolistModelItems extends JModelList {
         $query->join('LEFT', '#__catagories AS `c` ON `c`.id = a.`catid`');
 
         // Filter by published state
-        $status = $this->getState('filter.status');
+        $state = $this->getState('filter.status');
 
         if (is_numeric($state)) {
             $query->where('a.state = ' . (int) $state);
@@ -75,7 +75,7 @@ class TodolistModelItems extends JModelList {
 
         $filter_catid = $this->state->get('filter.catid');
 
-        if ($filter_card) {
+        if ($filter_catid) {
             $query->where("a.`catid` = '".$db->escape($filter_catid)."'");
         }
 

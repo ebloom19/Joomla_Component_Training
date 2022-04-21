@@ -15,7 +15,7 @@ $saveOrder = $listOrder == 'a.`ordering`';
 if($saveOrder) {
     $saveOrderingUrl = 'index.php?option=com_todolist&task=items.
         saveOrderAjax&tmpl=component';
-    JHtml::('sortablelist.sortable', 'itemList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
+    JHtml::_('sortablelist.sortable', 'itemList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 
 $sortFields = $this->getSortFields();
