@@ -1,8 +1,6 @@
 <?php
 defined('_JEXEC') or die;
 
-// jimport('joomla.application');
-
 class TodolistController extends JControllerLegacy {
     public function display($cachable = false, $urlparams = false) {
         $view = JFactory::getApplication()->input->getCmd('view', 'items');

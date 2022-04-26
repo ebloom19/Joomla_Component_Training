@@ -21,13 +21,15 @@
 
     <files folder="site">
         <filename>todolist.php</filename>
+        <filename>controller.php</filename>
+        <folder>controllers</folder>
     </files>
 
     <administration>
         <menu>com_todolist</menu>
         <submenu>
             <menu link="option=com_todolist&amp;view=items" view="items" alt="Todo List/Items">
-                COMTODOLIST_TITLE_ITEMS
+                COM_TODOLIST_TITLE_ITEMS
             </menu>
 
             <menu link="option=com_catergories&amp;extension=com_todolist" view="catagories" alt="Todo List/Categories">

@@ -10,20 +10,24 @@ class TodolistViewItem extends JViewLegacy {
 
     protected $form;
 
+    
     public function display($tpl = null) {
         $this->state = $this->get('State');
-        $this->item = $this->get('Items');
+        $this->item = $this->get('Item');
         $this->pagination = $this->get('Pagination');
-
+        $this->form	 = $this->get('Form');
+        
         if(count($errors = $this->get('Errors'))) {
             throw new Exception(implode("\n", $errors));
         }
-
+        
         $this->addToolbar();
-
+        
+        $this->sidebar = JHtmlSidebar::render();
+        
         parent::display($tpl);
     }
-
+    
     protected function addToolbar() {
         JFactory::getApplication()->input->set('hidemainmenu', true);
         
@@ -37,7 +41,7 @@ class TodolistViewItem extends JViewLegacy {
 
         JToolBarHelper::custom('item.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW');
 
-        if(!$IsNew) {
+        if(!$isNew) {
             JToolBarHelper::custom('item.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY');
         }
 
@@ -46,6 +50,7 @@ class TodolistViewItem extends JViewLegacy {
         } else {
             JToolBarHelper::cancel('item.cancel', 'JTOOLBAR_CLOSE');
         }
+    }
 
       
 }

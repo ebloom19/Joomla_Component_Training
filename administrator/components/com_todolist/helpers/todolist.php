@@ -11,11 +11,26 @@ class TodolistHelpersTodolist {
 
         JHtmlSidebar::addEntry(
             JText::_('JCATEGORIES') . ' (' . JText::_('COM_TODOLIST_TITLE_ITEMS') . ')',
-            "index.php?options=com_categories&extensions=com_todolist",
+            "index.php?option=com_categories&extensions=com_todolist",
             $vName == 'categories'
         );
         if($vName == 'categories') {
             JToolBarHelper::title('Todo List: JCATEGORIES (COM_TODOLIST_TITLE_ITEMS)');
         }
+    }
+
+    public static function getActions() {
+        $user = JFactory::getUser();
+        $result = new JObject;
+
+        $assetName = 'com_todolist';
+
+        $actions = array('core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.own', 'core.edit.state', 'core.delete');
+
+        foreach ($actions as $action) {
+            $result->set($action, $user->authorise($action, $assetName));
+        }
+
+        return $result;
     }
 }

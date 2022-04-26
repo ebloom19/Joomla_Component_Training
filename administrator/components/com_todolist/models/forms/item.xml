@@ -15,11 +15,11 @@
             name="catid"
             type="categoryedit"
             label="JCATEGORY"
-            description="COM_TODOLIST_FIELD_CATAGORY_DESC"
+            description="COM_TODOLIST_FIELD_CATEGORY_DESC"
             extension="com_todolist"
             required="true"
-            addfilepath="/administrator/components/com_categories/models/fields"
-            deault=""
+            addfieldpath="/administrator/components/com_categories/models/fields"
+            default=""
         />
 
         <field 
@@ -49,8 +49,9 @@
 
         <field 
             name="description"
-            type="text"
-            label="COM_TODOLIST_FIELD_DESCRIPTION_DESC"
+            type="editor"
+            label="JGLOBAL_DESCRIPTION"
+            description="COM_TODOLIST_FIELD_DESCRIPTION_DESC"
             filter="JComponentHelper::filterText"
             buttons="true"
             hide="readmore,pagebreak"
@@ -100,7 +101,7 @@
         <field 
             name="modified"
             type="calendar"
-            label="JGLOBAL_FIELD_MODIFIED_DESC"
+            label="JGLOBAL_FIELD_MODIFIED_LABEL"
             description="COM_TODOLIST_FIELD_MODIFIED_DESC"
             class="readonly"
             size="22"

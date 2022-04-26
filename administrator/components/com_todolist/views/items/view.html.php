@@ -15,9 +15,9 @@ class TodolistViewItems extends JViewLegacy {
         $this->items = $this->get('Items');
         $this->pagination = $this->get('Pagination');
 
-        // if(count($errors = $this->get('Errors'))) {
-        //     throw new Exception(implode("\n", $errors));
-        // }
+        if(count($errors = $this->get('Errors'))) {
+            throw new Exception(implode("\n", $errors));
+        }
 
         TodolistHelpersTodolist::addSubmenu('items');
 
@@ -31,32 +31,42 @@ class TodolistViewItems extends JViewLegacy {
 
     protected function addToolbar() {
         $state = $this->get('State');
+        $canDo = TodolistHelpersTodolist::getActions();
 
         JToolBarHelper::title(JText::_('COM_TODOLIST_TITLE_ITEMS'), 'items.png');
-        JToolBarHelper::addNew('item.add', 'JTOOLBAR_NEW');
-        JToolBarHelper::custom('items.duplicate', 'copy.png', 'copy_f2.png', 'JTOOLBAR_DUPLICATE', true);
+
+        if ($canDo->get('core.create')) {
+            JToolBarHelper::addNew('item.add', 'JTOOLBAR_NEW');
+            JToolBarHelper::custom('items.duplicate', 'copy.png', 'copy_f2.png', 'JTOOLBAR_DUPLICATE', true);
+        }
         
         if(isset($this->items[0])) {
-            JToolBarHelper::editList('item.edit', 'JTOOLBAR_EDIT');
 
-            JToolBarHelper::divider();
-            JToolBarHelper::custom('items.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_PUBLISH', true);
-            JToolBarHelper::custom('items.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+            if ($canDo->get('core.edit')) {
+                JToolBarHelper::editList('item.edit', 'JTOOLBAR_EDIT');
+            }
 
-            JToolBarHelper::divider();
-            JToolBarHelper::archiveList('items.archive', 'JTOOLBAR_ARCHIVE');
-
+            if ($canDo->get('core.edit.state')) {
+                JToolBarHelper::divider();
+                JToolBarHelper::custom('items.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_PUBLISH', true);
+                JToolBarHelper::custom('items.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+    
+                JToolBarHelper::divider();
+                JToolBarHelper::archiveList('items.archive', 'JTOOLBAR_ARCHIVE');
+            }
         }
 
-        if($state->get('filter.state' == -2)) {
+        if($state->get('filter.state' == -2 && $canDo->get('core.delete'))) {
             JToolBarHelper::deleteList('', 'items.delete', 'JTOOLBAR_EMPTY_TRASH');
             JToolBarHelper::divider();
-        } else {
+        } elseif ($canDo->get('core.edit.state')) {
             JToolBarHelper::trash('items.trash', 'JTOOLBAR_TRASH');
             JToolBarHelper::divider();
         }
 
-        JToolBarHelper::preferences('com_todolist');
+        if ($canDo->get('core.admin')) {
+            JToolBarHelper::preferences('com_todolist');
+        }
 
         JHtmlSidebar::setAction('index.php?option=com_todolist&view=items');
 

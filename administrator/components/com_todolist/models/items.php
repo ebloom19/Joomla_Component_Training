@@ -49,8 +49,8 @@ class TodolistModelItems extends JModelList {
         $query->select('`m`.name AS `modified_by_name`');
         $query->join('LEFT', '#__users AS `m` ON `m`.id = a.`modified_by`');
 
-        $query->select('`c`.name AS `catid`');
-        $query->join('LEFT', '#__catagories AS `c` ON `c`.id = a.`catid`');
+        $query->select('`c`.id AS `catid`');
+        $query->join('LEFT', '#__categories AS `c` ON `c`.id = a.`catid`');
 
         // Filter by published state
         $state = $this->getState('filter.status');

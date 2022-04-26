@@ -21,15 +21,15 @@ if($saveOrder) {
 $sortFields = $this->getSortFields();
 ?>
 <script type="text/javascript">
-    Joomla.orderTabel = function () {
+    Joomla.orderTable = function () {
         table = document.getElementById("sortTable");
         direction = document.getElementById("directionTable");
         order = table.options[table.selectedIndex].value;
 
-        if(order != '<?php echo $listOrder; ?>') {
+        if (order != '<?php echo $listOrder; ?>') {
             dirn = 'asc';
         } else {
-            dirn = direction.options.[direction.selectedIndex].value;
+            dirn = direction.options[direction.selectedIndex].value;
         }
 
         Joomla.tableOrdering(order, dirn, '');
@@ -75,6 +75,7 @@ $sortFields = $this->getSortFields();
 
 <form action="<?php echo JRoute::_('index.php?option=com_todolist&view=items'); ?>" 
     name="adminForm"
+    method="post"
     id="adminForm">
 
     <?php if (!empty($this->sidebar)): ?>
@@ -181,11 +182,14 @@ $sortFields = $this->getSortFields();
             <tbody>
             <?php foreach ($this->items as $i => $item) :
                 $ordering = ($listOrder == 'a.ordering');
+                $canCreate = $user->authorise('core.create', 'com_todolist');
+                $canEdit = $user->authorise('core.edit', 'com_todolist');
+                $canChange = $user->authorise('core.edit.state', 'com_todolist');
                 ?>
                 <tr class="row<?php echo $i % 2; ?>">
                     <?php if(isset($this->items[0]->ordering)) : ?>
                         <td class="order nowrap center hidden-phone">
-                                <?php 
+                                <?php if ($canChange):
                                     $disableClassName = '';
                                     $disableLabel = '';
 
@@ -200,6 +204,11 @@ $sortFields = $this->getSortFields();
                                     <input type="text" style="display:none" name="order[]"
                                         size="5"
                                         value="<?php echo $item->ordering; ?>" class="width-20 text-area-order"/>
+                                <?php else: ?>
+                                    <span class="sortable-handler inactive">
+                                        <i class="icon-menu"></i>
+                                    </span>
+                                <?php endif; ?>
                         </td>
                     <?php endif; ?>
                     <td class="hidden-phone">
@@ -207,16 +216,20 @@ $sortFields = $this->getSortFields();
                     </td>
                     <?php if(isset($this->items[0]->state)): ?>
                         <td class="center">
-                            <?php echo JHtml::_('jgrid.published', $item->state, $i, 'items.', true, 'cb'); ?>
+                            <?php echo JHtml::_('jgrid.published', $item->state, $i, 'items.', $canChange, 'cb'); ?>
                         </td>
                     <?php endif; ?>
                     <td>
                         <?php echo $item->id; ?>
                     </td>
                     <td>
+                        <?php if($canEdit): ?>
                         <a href="<?php echo JRoute::_('index.php?option=com_todolist&task=item.edit&id='.(int) $item->id); ?>">
                             <?php echo $this->escape($item->title); ?>
                         </a>
+                        <?php else: ?>
+                            <?php echo $this->escape($item->title); ?>
+                        <?php endif; ?>
                     </td>
                     <td>
                         <?php

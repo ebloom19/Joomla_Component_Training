@@ -1,10 +1,12 @@
 <?php
 defined('_JEXEC') or die;
 
+var_dump($this->form->renderField('created_by'));
+
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
-JHtml::_('formbehaviour.chosen', 'select');
+JHtml::_('formbehavior.chosen', 'select');
 JHtml::_('behavior.keepalive');
 
 // IMport CSS
@@ -29,7 +31,7 @@ JHtml::_('behavior.keepalive');
 </script>
 
 <form
-    action="<?php echo JRout::_('index.php?option=com_todolist&layout=edit&id=' . (int) $this->item->id); ?>"
+    action="<?php echo JRoute::_('index.php?option=com_todolist&layout=edit&id=' . (int) $this->item->id); ?>"
     method="post" enctype="multipart/form-data" name="adminForm" id="item-form" class="form-validate">
     <?php echo $this->form->renderField('title'); ?>
     <div class="form-horizontal'=">
@@ -41,7 +43,7 @@ JHtml::_('behavior.keepalive');
                     <input type="hidden" name="jform[id]" value="<?php echo $this->item->id; ?>"/>
                     <input type="hidden" name="jform[ordering]" value="<?php echo $this->item->ordering; ?>"/>
                     <?php echo $this->form->renderField('status'); ?>
-                    <?php echo $this->form->renderFiled('catid'); ?>
+                    <?php echo $this->form->renderField('catid'); ?>
                     <?php echo $this->form->renderField('description'); ?>
                 </fieldset>
             </div>

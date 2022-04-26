@@ -11,10 +11,12 @@ class TodolistModelItem extends JModelAdmin {
     public function getTable($type = 'Item', $prefix = 'TodolistTable', $config = array()) {
         return JTable::getInstance($type, $prefix, $config);
     }
+    
 
     public function getForm($data = array(), $loadData = true) {
         $form = $this->loadForm(
             'com_todolist.item',
+            'item',
             array('control' => 'jform',
                 'load_data' => $loadData
             )
@@ -42,6 +44,12 @@ class TodolistModelItem extends JModelAdmin {
     }
 
     public function duplicate(&$pks) {
+        $user = JFactory::getUser();
+
+        if(!$user->authorise('core.create', 'com_todolist') ) {
+            throw new Exception(JText::_('JERROR_CORE_CREATE_NOT_PERMITTED'));
+        }
+
         $dispatcher = JEventDispatcher::getInstance();
         $context = $this->option . '.' . $this->name;
 
